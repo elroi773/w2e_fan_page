@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import wave1 from "./img/wave/wave1.png";
+import wave2 from "./img/wave/wave2.png";
+import wave3 from "./img/wave/wave3.png";
+import wave4 from "./img/wave/wave4.png";
+import wave5 from "./img/wave/wave5.png";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const waves = [
+    { src: wave1, riseHeight: 20 },
+    { src: wave2, riseHeight: 280 },
+    { src: wave3, riseHeight: 260 },
+    { src: wave4, riseHeight: 240 },
+    { src: wave5, riseHeight: 220 },
+  ];
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="wave-container">
+      {waves.map((wave, index) => (
+        <img
+          key={index}
+          src={wave.src}
+          alt={`물결 ${index + 1}`}
+          className="wave"
+          style={{
+            animationDelay: `${index * 0.5}s`,
+            '--rise-height': `${wave.riseHeight}px`, // CSS 커스텀 속성
+          }}
+        />
+      ))}
+    </div>
+  );
 }
 
-export default App
+export default App;
