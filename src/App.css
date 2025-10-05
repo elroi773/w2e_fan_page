@@ -1,35 +1,520 @@
-body{
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.wave-container {
+body {
+  margin: 0;
+  padding: 0;
+  background: #2a2a2a;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  cursor: default;
+}
+
+.desktop-container {
+  width: 100vw;
+  height: 100vh;
+  background: #2a2a2a;
+  padding: 20px;
+}
+
+.desktop-header {
+  color: #999;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.main-content {
   position: relative;
   width: 100%;
-  height: 200px;
-  background-color: #eef; /* 테스트용 */
+  max-width: 1200px;
+  height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #e8f4f8 0%, #b8d4e0 50%, #8ab4c8 100%);
+  border-radius: 8px;
   overflow: hidden;
-  margin-top: 800px;
+  margin: 0 auto;
 }
 
-.wave {
+/* 지구 섹션 */
+.earth-section {
   position: absolute;
-  bottom: 0;
+  left: -150px;
+  top: 50%;
+  width: 400px;
+  height: 400px;
+  transition: transform 0.3s ease-out;
+}
+
+.earth-circle {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a9fd8 0%, #2563a8 50%, #1a4d7a 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.earth-circle:hover {
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.earth-circle.rotating {
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.earth-inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255,255,255,0.1) 20%, 
+    transparent 40%,
+    rgba(100,150,200,0.3) 60%,
+    transparent 80%
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.earth-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.2);
+}
+
+.dots-pattern {
+  position: absolute;
+  left: 250px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 300px;
+  background-image: radial-gradient(circle, #1a4d7a 2px, transparent 2px);
+  background-size: 15px 15px;
+  opacity: 0.6;
+  animation: dots-fade 2s ease-in-out infinite alternate;
+}
+
+@keyframes dots-fade {
+  from { opacity: 0.4; }
+  to { opacity: 0.8; }
+}
+
+/* 통화 헤더 */
+.call-header {
+  position: absolute;
+  top: -100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 1800px;
-  opacity: 0.8;
-
-  /* 애니메이션 */
-  animation: rise 3s ease-in-out forwards;
+  background: rgba(60, 60, 60, 0.95);
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(10px);
 }
 
-@keyframes rise {
+.call-header.active {
+  top: 80px;
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-icon.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(74, 159, 216, 0.5); }
+}
+
+.earth-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a9fd8, #2563a8);
+}
+
+.call-info {
+  color: white;
+}
+
+.call-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.call-subtitle {
+  font-size: 11px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.call-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.call-btn.hover-scale:hover {
+  transform: scale(1.15);
+}
+
+.call-btn.hover-scale:active {
+  transform: scale(0.95);
+}
+
+.call-btn.end {
+  background: #e74c3c;
+  color: white;
+}
+
+.call-btn.end:hover {
+  background: #c0392b;
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.call-btn.accept {
+  background: #27ae60;
+  color: white;
+}
+
+.call-btn.accept:hover {
+  background: #229954;
+  box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+}
+
+/* 노래 리스트 */
+.song-list {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.song-item {
+  color: #2c5f7f;
+  font-size: 18px;
+  margin: 8px 0;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fade-in-up 0.6s ease forwards;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.song-item:not(.song-title):hover {
+  color: #1a4d7a;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.song-item:not(.song-title):active {
+  transform: scale(0.95);
+}
+
+.song-item.selected {
+  color: #1a4d7a;
+  background: rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+}
+
+.song-item.song-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  cursor: default;
+}
+
+/* 밴드 멤버 */
+.band-members {
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  width: 400px;
+  height: 500px;
+  transition: transform 0.3s ease-out;
+}
+
+.member-silhouette {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #2563a8 0%, rgba(74, 159, 216, 0.8) 100%);
+  clip-path: polygon(
+    10% 40%, 20% 30%, 30% 35%, 35% 30%, 40% 25%, 45% 30%, 50% 28%, 
+    55% 32%, 60% 28%, 65% 35%, 70% 30%, 75% 40%, 80% 45%, 
+    85% 50%, 90% 60%, 95% 80%, 95% 100%, 5% 100%, 5% 80%
+  );
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.member-silhouette:hover {
+  opacity: 1;
+}
+
+/* 음악 기기들 */
+.music-devices {
+  position: absolute;
+  bottom: 40px;
+  right: 100px;
+  display: flex;
+  gap: 20px;
+  transition: transform 0.3s ease-out;
+}
+
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-10px);
+  filter: brightness(1.1);
+}
+
+.tape-player {
+  width: 140px;
+  height: 90px;
+  background: linear-gradient(135deg, #3a5f7a, #2c4a5f);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.tape-window {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+
+.tape-reel {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1a4d7a 40%, transparent 41%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.tape-player.playing .tape-reel {
+  animation: spin-reel 2s linear infinite;
+}
+
+@keyframes spin-reel {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.mp3-player {
+  width: 80px;
+  height: 90px;
+  background: linear-gradient(135deg, #4a5f7a, #3a4f5f);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.mp3-screen {
+  width: 100%;
+  height: 40%;
+  background: rgba(50, 100, 150, 0.3);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mp3-screen.active {
+  background: rgba(100, 200, 255, 0.3);
+  box-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
+}
+
+.equalizer {
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  height: 20px;
+}
+
+.bar {
+  width: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+  animation: equalizer 0.8s ease-in-out infinite;
+}
+
+.bar:nth-child(1) { animation-delay: 0s; }
+.bar:nth-child(2) { animation-delay: 0.2s; }
+.bar:nth-child(3) { animation-delay: 0.4s; }
+.bar:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes equalizer {
+  0%, 100% { height: 5px; }
+  50% { height: 20px; }
+}
+
+.mp3-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.mp3-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 기타 */
+.guitar {
+  position: absolute;
+  bottom: 0;
+  right: -50px;
+  width: 150px;
+  height: 500px;
+  transition: transform 0.3s ease-out;
+}
+
+.guitar-body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    rgba(74, 159, 216, 0.6) 0%, 
+    rgba(37, 99, 168, 0.8) 50%, 
+    rgba(26, 77, 122, 0.9) 100%
+  );
+  clip-path: polygon(
+    40% 0%, 60% 0%, 55% 30%, 70% 35%, 75% 50%, 70% 65%, 
+    55% 70%, 60% 100%, 40% 100%, 45% 70%, 30% 65%, 
+    25% 50%, 30% 35%, 45% 30%
+  );
+  position: relative;
+}
+
+.guitar-strings {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 40%;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 8px,
+    rgba(255, 255, 255, 0.3) 8px,
+    rgba(255, 255, 255, 0.3) 9px
+  );
+}
+
+/* 떠다니는 음표 */
+.floating-note {
+  position: absolute;
+  font-size: 24px;
+  color: rgba(74, 159, 216, 0.6);
+  animation: float-up 4s ease-in infinite;
+  pointer-events: none;
+}
+
+.note-1 {
+  left: 30%;
+  bottom: 20%;
+  animation-delay: 0s;
+}
+
+.note-2 {
+  left: 50%;
+  bottom: 30%;
+  animation-delay: 1s;
+}
+
+.note-3 {
+  left: 70%;
+  bottom: 25%;
+  animation-delay: 2s;
+}
+
+.note-4 {
+  left: 40%;
+  bottom: 35%;
+  animation-delay: 3s;
+}
+
+@keyframes float-up {
   0% {
-    bottom: 0;
-    opacity: 0.5;
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
   }
   100% {
-    bottom: var(--rise-height, 400px); /* JS에서 지정한 높이 사용 */
-    opacity: 1;
+    transform: translateY(-200px) rotate(360deg);
+    opacity: 0;
   }
 }
